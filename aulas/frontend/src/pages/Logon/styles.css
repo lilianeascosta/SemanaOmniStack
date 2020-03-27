@@ -1,0 +1,10 @@
+.logon-container { 
+    width: 100%;
+    max-width: 1120px;
+    height: 100vh; /*altura toda do corpo*/
+    margin: 0 auto; /*faz com q o conteudo fique sempre centralizado na tela*/
+
+    display: flex;
+    align-items: center; /*alinha os itens verticalmente ao centro*/
+    justify-content: center; /*alinha os itens horizontalmente ao centro*/
+}

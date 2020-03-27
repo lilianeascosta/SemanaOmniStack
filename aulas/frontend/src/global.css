@@ -1,0 +1,22 @@
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    outline: 0;
+    box-sizing: border-box; /*padding do elemento seja anexado na largura e altura*/
+}
+
+body {
+    font: 400 14px Source Sans Pro, sans-serif;
+    background: #f0f0f5;
+    -webkit-font-smoothing: antialiased; /*da uma melhorada na visualização do chrome*/
+}
+
+input, button, textarea {
+    font: 400 14px Source Sans Pro, sans-serif;
+}
+
+button {
+    cursor: pointer;
+}
