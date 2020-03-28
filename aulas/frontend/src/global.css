@@ -20,3 +20,64 @@ input, button, textarea {
 button {
     cursor: pointer;
 }
+
+form input {
+    width: 100%;
+    height: 60px;
+    color: #333333;
+    border: 1px solid #dcdce6;
+    border-radius: 8px;
+    padding: 0 24px;
+}
+
+form textarea {
+    width: 100%;
+    resize: vertical; /*cresce apenas verticalmente*/
+    min-height: 140px;
+    height: 60px;
+    color: #333333;
+    border: 1px solid #dcdce6;
+    border-radius: 8px;
+    padding: 16px 24px;
+    line-height: 24px;
+}
+
+.button {
+    width: 100%;
+    height: 60px;
+    background: #e02041;
+    border: 0;
+    border-radius: 8px;
+    color: #FFF;
+    font-weight: 700; /*deixa em negrito*/
+    margin-top: 16px;
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+    font-size: 18;
+    line-height: 60px;
+    transition: filter 0.2s; /*quando o filtro mudar vai mudar em 0.2 segundos p fazer a alteração*/
+}
+
+.button:hover {
+    filter: brightness(90%); /*escurece o botão quando o mouse passa em 10%*/
+}
+
+.back-link {
+    display: flex;
+    align-items: center;
+    margin-top: 40px;
+    color: #41414d;
+    font-size: 18px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: opacity 0.2s;
+}
+
+.back-link svg { /*opacidade do icone*/
+    margin-right: 8px;
+}
+
+.back-link:hover {
+    opacity: 0.8;
+}
