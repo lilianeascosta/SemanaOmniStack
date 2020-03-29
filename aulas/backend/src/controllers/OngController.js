@@ -1,4 +1,4 @@
-const crypto = require('crypto');
+const generateUniqueId = require('../utils/generateUniqueId');
 const connection = require('../database/connection'); //conexao com o banco
 
 module.exports = {
@@ -11,7 +11,7 @@ module.exports = {
     async create(request, response){
         const {name, email, whatsapp, city, uf} = request.body;
 
-        const id = crypto.randomBytes(4).toString('HEX'); //criando um id aleatorio do tipo string para ong
+        const id = generateUniqueId();
 
         await connection('ongs').insert({
             //coloca todas as colunas que quer inserir dentro da tabela
