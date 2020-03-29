@@ -11,21 +11,31 @@ export default function Incidents () {
     const [total, setTotal] = React.useState(0);
     const navigation = useNavigation();
     const teste = incidents.name;
+    const [page, setPage] = React.useState(1);
+    const [loading, setLoading] = React.useState(false); //para armazenar informação qd buscaa dados novos, para evitar que sejam buscados novamente
 
     function navigateToDetail (incident) {
         navigation.navigate('Detail', { incident });
     }
 
     async function loadIncidents() {
-        const response = await api.get('incidents');
-        setIncidents(response.data);
+        if(loading == true){
+            return; //evitar q qd uma requisição seja feita que mais uma requisição venha a acontecer
+        }
+        if(total > 0 && incidents.length == total){
+            return;
+        }
+        setLoading(true);
+        const response = await api.get(`incidents`, {params: { page }});
+        setIncidents([...incidents, ...response.data]);
         setTotal(response.headers['x-total-count']);
+        setPage(page + 1); //pular para proxima pagina
+        setLoading(false);
     }
 
     useEffect(() => {
         loadIncidents();
     }, []);
-alert(`${teste}`)
     return(
         <View style={styles.container}>
             <View style={styles.header} >
@@ -42,6 +52,8 @@ alert(`${teste}`)
                 style={styles.incidentList}
                 keyExtractor={incident => String(incident.id)} //como ta retornando um objeto pegamos apenas o id
                 showsHorizontalScrollIndicator={false}
+                onEndReached={loadIncidents}
+                onEndReachedThreshold={0.2}
                 renderItem={({ item: incident }) => ( //troca o nome da variavel item por incident
                     <View style={styles.incident}>
                         <Text style={styles.incidentProperty}>ONG:</Text>
@@ -60,7 +72,7 @@ alert(`${teste}`)
 
                         <TouchableOpacity
                             style={styles.detailsButton}
-                            onPress={() => navigateToDetail()}
+                            onPress={() => navigateToDetail(incident)}
                         >
                             <Text style={styles.detailsButtonText} >Ver mais detalhes</Text>
                             <Feather name="arrow-right" size={16} color="#E02041" />

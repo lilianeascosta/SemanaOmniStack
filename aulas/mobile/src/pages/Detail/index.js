@@ -5,14 +5,12 @@ import { View, Image, Text, TouchableOpacity, Linking } from 'react-native';
 import * as MailComposer from 'expo-mail-composer';
 import logoImg from '../../assets/logo.png';
 import styles from './styles';
-import api from '../../services/api'
 
 export default function Detail () {
-    const response = api.get('incidents');
     const navigation = useNavigation();
     const route = useRoute();
     const incident = route.params.incident;
-    const message = 'Olá APAD, estou entrando em contato pois gostaria de ajudar no caoso "Cadelinha atropelada" com o valor de R$120,00';
+    const message = `Olá ${incident.name}, estou entrando em contato pois gostaria de ajudar no caso "${incident.title}" com o valor de ${Intl.NumberFormat('pt-BR', {style: 'currency',currency: 'BRL'}).format(incident.value)}`;
 
     function navigateBack() {
         navigation.goBack(); //propria função do navigation para voltar
@@ -21,14 +19,14 @@ export default function Detail () {
     function sendMail() {
         //pacote do proprio expo
         MailComposer.composeAsync({
-            subject: 'Heroi do caso: Cadelinha atropelada', //assunto da mensagem
-            recipients: ['diego@rockeseat.com.br'], //quem vai receber a mensagem
+            subject: `Heroi do caso: ${incident.title}`, //assunto da mensagem
+            recipients: [incident.email], //quem vai receber a mensagem
             body: message, //conteudo da mensagem
         })
     }
 
     function sendWhatsapp(){
-        Linking.openURL(`whatsapp://send?phone=557998666530&text=${message}`);
+        Linking.openURL(`whatsapp://send?phone=${incident.whatsapp}&text=${message}`);
     }
 
     return(
@@ -41,19 +39,19 @@ export default function Detail () {
             </View>
 
             <View style={styles.incident}>
-                <Text style={styles.incidentProperty}>ONG:</Text>
-                        <Text style={styles.incidentVelue}>{response.name}</Text>
+                <Text style={[styles.incidentProperty, { marginTop:0 }]}>ONG:</Text>
+                <Text style={styles.incidentVelue}>{incident.name} de {incident.city}/{incident.uf} </Text>
 
-                        <Text style={styles.incidentProperty}>CASO:</Text>
-                        <Text style={styles.incidentVelue}>{response.title}</Text>
+                <Text style={styles.incidentProperty}>CASO:</Text>
+                <Text style={styles.incidentVelue}>{incident.title}</Text>
 
-                        <Text style={styles.incidentProperty}>VALOR:</Text>
-                        <Text style={styles.incidentVelue}>
-                            {Intl.NumberFormat('pt-BR', {
-                                style: 'currency',
-                                currency: 'BRL'
-                            }).format(response.value)}
-                        </Text>
+                <Text style={styles.incidentProperty}>VALOR:</Text>
+                <Text style={styles.incidentVelue}>
+                    {Intl.NumberFormat('pt-BR', {
+                        style: 'currency',
+                        currency: 'BRL'
+                    }).format(incident.value)}
+                </Text>
  
             </View>
 
